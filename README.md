@@ -7,4 +7,7 @@
 ## references
 
 - course link [here](https://www.ins.gov.co/modelamiento/modelamiento.html)
+- recon projects [here](https://www.repidemicsconsortium.org/projects/)
+- recon on github [here](https://github.com/reconhub)
+- recon learn [hear](https://www.reconlearn.org/)
 - official twitter #hashtag?
