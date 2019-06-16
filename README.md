@@ -1,9 +1,7 @@
 # outbrake analysis and modelling for public health with RECON
 
-> "... dedicated to all human beings."
-
-> _Reckoner by Radiohead_
-
+> "... dedicated to all human beings."\
+> _Reckoner by Radiohead_\
 > Please, listen [here](https://www.youtube.com/watch?v=kPWvpDm076o)
 
 ## references
