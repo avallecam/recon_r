@@ -11,3 +11,9 @@
 - recon on github [here](https://github.com/reconhub)
 - recon learn [hear](https://www.reconlearn.org/)
 - official twitter #hashtag?
+
+## products
+
+Here are some images of my learning process:
+
+![Fig. 1](figure/0301-zika-popdyn-naivehost.png)
