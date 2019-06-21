@@ -1,0 +1,30 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## recon day 03
+
+
+### host dynamics
+
+$$ \frac{dS_h}{dt} = + \mu_h N_h - \frac{\beta_h S_h}{N_h} b I_v - \mu_h S_h $$
+
+$$ \frac{dI_h}{dt} = \frac{\beta_h S_h}{N_h} b I_v - \gamma_h I_h - \mu_h I_h $$
+
+$$ \frac{dR_h}{dt} = \gamma_h I_h - \mu_h R_h $$
+
+### vector dynamics
+
+$$ \frac{dS_v}{dt} = + \mu_v N_v - \frac{\beta_v S_v}{N_v} b I_v - \mu_v S_v $$
+
+$$ \frac{dE_v}{dt} = \frac{\beta_v S_v}{N_v} b I_v - \delta_v E_h - \mu_v E_v $$
+
+$$ \frac{dI_v}{dt} = \delta_v E_v - \mu_v I_v $$
+
+
+

@@ -1,3 +1,10 @@
+
+# topic -------------------------------------------------------------------
+
+# R0, CFR, projection
+
+# libraries ---------------------------------------------------------------
+
 library(readxl)
 library(outbreaks)
 library(incidence)
