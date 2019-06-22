@@ -2,6 +2,8 @@
 # topic -------------------------------------------------------------------
 
 # R0, CFR, projection
+# https://www.reconlearn.org/post/real-time-response-1.html
+# https://www.reconlearn.org/post/real-time-response-2.html 
 
 # libraries ---------------------------------------------------------------
 

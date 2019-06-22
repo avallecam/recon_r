@@ -2,6 +2,7 @@
 # topic -------------------------------------------------------------------
 
 #learn R
+#https://www.reconlearn.org/post/practical-intror.html
 
 # atomic vectors ----------------------------------------------------------
 

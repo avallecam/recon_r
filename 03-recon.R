@@ -2,6 +2,7 @@
 # topic -------------------------------------------------------------------
 
 #vector-borne disease
+#https://www.reconlearn.org/post/practical-vbd.html
 
 #todo
 #- shiny app of the change in the intervention parameter

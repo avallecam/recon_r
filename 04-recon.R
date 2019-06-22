@@ -2,6 +2,7 @@
 # topic -------------------------------------------------------------------
 
 #contact-disease models
+#https://www.reconlearn.org/post/practical-tb.html
 
 # libraries ---------------------------------------------------------------
 
