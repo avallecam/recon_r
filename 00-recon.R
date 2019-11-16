@@ -13,6 +13,7 @@ install.packages(p_list)
 devtools::install_github("annecori/EpiEstim")
 devtools::install_github("reconhub/epicontacts@ttree")
 devtools::install_github("reconhub/projections")
+devtools::install_github("reconhub/epimaps")
 
 for (i in 1:length(p_list)) {
   library(p_list[i],character.only = T)
