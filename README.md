@@ -1,23 +1,20 @@
-outbrake analysis and modelling for public health with RECON
-============================================================
+# outbrake analysis and modelling for public health with RECON
 
 > “… dedicated to all human beings.”  
 > *Reckoner by Radiohead*  
-> Please, listen [here](https://www.youtube.com/watch?v=kPWvpDm076o)
+> Please, listen [here](https://youtu.be/2FMP-9bn9N8)
 
-references
-----------
+## references
 
 -   course link
     [here](https://www.ins.gov.co/modelamiento/modelamiento.html)
 -   recon projects
     [here](https://www.repidemicsconsortium.org/projects/)
 -   recon on github [here](https://github.com/reconhub)
--   recon learn [hear](https://www.reconlearn.org/)
+-   recon learn [here](https://www.reconlearn.org/)
 -   official twitter \#hashtag?
 
-products
---------
+## products
 
 Here are some images of my learning process:
 
