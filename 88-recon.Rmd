@@ -1,0 +1,272 @@
+---
+title: "Una introducción a R y Rstudio"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    # code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+```{r klippy, echo=FALSE, eval=TRUE, include=TRUE}
+klippy::klippy(position = c("top", "right"))
+```
+
+
+# Distribuciones estadísticas y aplicaciones en epidemiología
+
+> Propuesta de actualización de la versión actual 
+en [RECON learn](https://deploy-preview-104--reconlearn.netlify.app/post/practical-intror-spanish.html#trabajar-con-distribuciones-de-probabilidad)
+
+# Trabajar con distribuciones de probabilidad {#slugtab}
+
+Todas las distribuciones en R se pueden explorar mediante el uso de funciones que nos permiten obtener diferentes formas de distribución. Afortunadamente, todas las distribuciones funcionan de la misma manera, por lo que si aprende a trabajar con una, tendrá la idea general de cómo trabajar con las demás.
+
+Por ejemplo, para una distribución normal se usa `dnorm`. Puedes usar `?dnorm` para explorar los argumentos en esta función: `dnorm(x, mean = 0, sd = 1, log = FALSE)` y sus funciones relacionadas:
+
+ - `dnorm` da la función de densidad
+ - `pnorm` da la función de probabilidad
+ - `qnorm` da la función cuantil
+ - `rnorm` genera valores aleatorios 
+
+Muchas distribuciones son parte del paquete `stats` que viene por defecto con R, como _uniform_, _poisson_ y _binomial_, entre otros. Para otras distribuciones que se utilizan con menos frecuencia, a veces puede que necesite instalar otros paquetes. Para obtener una lista no exhaustiva de las distribuciones más utilizadas y sus argumentos, consultar la siguiente tabla:
+
+
+|Nombre            |probabilidad |cuantil      |distribución |random       |
+|:-----------------|:------------|:------------|:------------|:------------|
+|Beta              |`pbeta()`    |`qbeta()`    |`dbeta()`    |`rbeta()`    |
+|Binomial          |`pbinom()`   |`qbinom()`   |`dbinom()`   |`rbinom()`   |
+|Cauchy            |`pcauchy()`  |`qcauchy()`  |`dcauchy()`  |`rcauchy()`  |
+|Chi-Square        |`pchisq()`   |`qchisq()`   |`dchisq()`   |`rchisq()`   |
+|Exponential       |`pexp()`     |`qexp()`     |`dexp()`     |`rexp()`     |
+|Gamma             |`pgamma()`   |`qgamma()`   |`dgamma()`   |`rgamma()`   |
+|Logistic          |`plogis()`   |`qlogis()`   |`dlogis()`   |`rlogis()`   |
+|Log Normal        |`plnorm()`   |`qlnorm()`   |`dlnorm()`   |`rlnorm()`   |
+|Negative Binomial |`pnbinom()`  |`qnbinom()`  |`dnbinom()`  |`rnbinom()`  |
+|Normal            |`pnorm()`    |`qnorm()`    |`dnorm()`    |`rnorm()`    |
+|Poisson           |`ppois()`    |`qpois()`    |`dpois()`    |`rpois()`    |
+|Student's t       |`pt()`       |`qt()`       |`dt()`       |`rt()`       |
+|Uniform           |`punif()`    |`qunif()`    |`dunif()`    |`runif()`    |
+|Weibull           |`pweibull()` |`qweibull()` |`dweibull()` |`rweibull()` |
+
+## Uso de las funciones 
+
+### `rnorm()`
+
+Podemos ilustrar una distribución normal
+con media 0 y desviación estandar 1
+dibujando un histograma
+con 1000 observaciones aleatorias
+a partir de esta distribución.
+
+```{r}
+hist(rnorm(n = 1000))
+```
+
+Cada vez que corras esta última línea, generaras
+un nuevo conjunto de datos aleatorios. ¡Inténtalo!
+
+### `dnorm()`
+
+La densidad de la distribución aleatoria
+a cualquier punto dado
+indica qué tan probable son dichos valores en dicho rango.
+
+```{r}
+dnorm(x = 0)
+dnorm(x = -1)
+dnorm(x = 1)
+```
+
+
+Tal y como vemos en la gráfica anterior
+tanto 1 como -1 tienen una densidad muy similar
+
+¿Cuál es el valor de la densidad para un
+valor poco probable en el rango, por ejemplo 4?
+
+```{r}
+dnorm(x = 4)
+```
+
+### `pnorm()`
+
+Los valores de densidad no proveen los valores de
+la probabildiad, pero dan una idea de su
+probabilidad relativa.
+
+El percentil proporciona información sobre la
+probabilidad de que los valores de una
+distribución normal caigan por debajo de un
+valor determinado.
+
+¿Cuál es la probabilidad de que los valores sean
+inferiores a -1?
+
+```{r}
+pnorm(q = -1)
+```
+
+¿Cuál es la probabilidad de que los valores sean
+inferiores a 0?
+o, ¿Qué proporción de valores cae por debajo de 0?
+
+```{r}
+pnorm(q = 0)
+```
+
+¿Qué proporción de valores cae por debajo de 1?
+
+```{r}
+pnorm(q = 1)
+```
+
+En análisis estadísticos, una distribución normal
+puede ser usada para representar potenciales
+observaciones debajo de una hipótesis nula.
+Si una observación cae lejos en las colas
+de esta distribución, sugiere que
+podemos rechazar la hipótesis nula.
+
+Para una distribución normal,
+¿Cuál es la probabilidad de que una observación
+caiga debajo de -1.96?
+
+```{r}
+pnorm(q = -1.96)
+```
+
+¿Cuál es la probabilidad de que una observación
+caiga por arriba de 1.96?
+
+```{r}
+1 - pnorm(q = 1.96)
+```
+
+Note que estos valores
+son frecuentemente usados como punto de corte,
+de forma que la probabilidad de una observación
+caiga debajo de -1.96 o arriba de 1.96,
+sumando aproximadamente `0.05`.
+
+```{r}
+pnorm(q = -1.96) + (1 - pnorm(q = 1.96))
+```
+
+`0.05` representa una probabilidad aceptablemente baja
+de que un valor extremo pueda ser observado en una muestra
+si la hipótesis nula es correcta.
+
+### `qnorm()`
+
+La función cuantil permite plantear
+preguntas diferentes pero relacionadadas,
+Por ejemplo:
+¿Por debajo de qué valor cae la mitad de la distribución?
+
+```{r}
+qnorm(p = 0.5)
+```
+
+¿Por debajo de qué valor cae el 2.5% de la distribución?
+
+```{r}
+qnorm(p = 0.025)
+```
+
+¿Por arriba de qué valor cae el 2.5% de la distribución?
+
+```{r}
+qnorm(p = (1-0.025))
+```
+
+Intenta realizar lo mismo con el resto de distribuciones
+usando las funciones de la [tabla de arriba](#slugtab)
+
+### Uso de los parámetros
+
+Casi todas las distribuciones estadísticas
+emplean parámetros diferentes, por lo que
+sus funciones también requieren de diferentes argumentos.
+
+Con el aplicativo titulado __"el zoológico de distribuciones"__
+puedes explorar de forma interactiva 
+varias distribuciones y sus respectivos parámetros
+https://ben18785.shinyapps.io/distribution-zoo/
+
+Por ejemplo,
+la distribución binomial tiene dos parámetros,
+la probabilidad de éxito, `prob`, y
+el número de ensayos, `size`.
+
+La distribución binomial se suele ilustrar con una
+serie de lanzamientos de una moneda, en la que el
+éxito puede definirse en términos de que el lanzamiento
+de la moneda dé "cara", y
+en la que `prob = 0.5` si la moneda es justa.
+
+La distribución binomial sólo puede tomar valores
+enteros no negativos, a diferencia de la distribución normal,
+que incluye cualquier número entre -∞ y ∞.
+
+```{r}
+hist(rbinom(n=100000, size=10, prob=0.5))
+```
+
+## Uso de las distribuciones estadísticas en epidemiología
+
+### Ejemplo 1
+
+Podemos usar la distribución binomial para describir
+el número de personas infectadas en un área muestreada.
+Por ejemplo, si muestreamos un área que contiene
+`size = 40` personas y cada persona tiene un probabilidad
+`prob = 0.1` de estar infectada,
+entonces la distribución del número de personas infectadas
+dentro del área es:
+
+```{r}
+hist(rbinom(n = 100000, size = 40, prob = 0.1))
+# hist(rbinom(n = 100000, size = 40, prob = 0.1),xlim = c(0,40))
+```
+
+También podemos expresarlo en términos de proporción
+de personas infectadas dividiendo por su tamaño `size`
+
+```{r}
+hist(rbinom(n = 100000, size = 40, prob = 0.1)/40)
+# hist(rbinom(n = 100000, size = 40, prob = 0.1)/40,xlim = c(0,1))
+```
+
+En promedio, ¿Qué porcentaje del área tendría un
+10% o menos de personas infectadas (es decir, 4 de 40)?
+
+```{r}
+pbinom(q = 4, size = 40, prob=0.1)
+```
+
+### Ejemplo 2:
+
+Podemos usar la distribución beta para describir la
+proporción de personas vacunadas en una población
+durante un proceso de vacunación
+
+```{r}
+hist(rbeta(n = 100000, shape1 = 1, shape2 = 3.8))
+```
+
+En promedio, ¿Qué porcentaje de la población
+tendría un 70% o más de personas vacunadas?
+
+```{r}
+1- pbeta(q = 0.7, shape1 = 1, shape2 = 3.8)
+```
+
+# Referencias
+
+Sparks, A.H., P.D. Esker, M. Bates, W. Dall' Acqua, Z. Guo, V. Segovia, S.D. Silwal, S. Tolos, and K.A. Garrett, 2008. Ecology and Epidemiology in R: Disease Progress over Time. _The Plant Health Instructor_. DOI: https://doi.org/10.1094/PHI-A-2008-0129-01. [Chapter: Statistical distributions](https://www.apsnet.org/edcenter/disimpactmngmnt/topc/EcologyAndEpidemiologyInR/IntroductionToR/Pages/StatisticalDistributions.aspx)
