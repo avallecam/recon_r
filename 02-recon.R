@@ -43,13 +43,17 @@ contacts <- read_excel("data-raw/contacts_20140701.xlsx",
 linelist
 #more data to recolect
 #age?
-linelist <- linelist %>% 
-  #select(case_id,date_of_infection:date_of_outcome) %>% 
-  gather(key,value,#-case_id,
-         date_of_infection:date_of_outcome
-         ) %>% 
-  mutate(value=as.Date(value,format = "%Y-%m-%d")) %>% #change to lubridate
-  spread(key,value)
+
+# linelist$date_of_infection <- as.Date(linelist$date_of_infection, format = "%Y-%m-%d")
+# linelist$date_of_hospitalisation <- as.Date(linelist$date_of_hospitalisation, format = "%Y-%m-%d")
+# linelist$date_of_outcome <- as.Date(linelist$date_of_outcome, format = "%Y-%m-%d")
+
+# solucion alternativa tidyverse
+linelist <- linelist %>%
+  as_tibble() %>%
+  mutate(across(.cols = date_of_infection:date_of_outcome,
+                .fns = lubridate::as_date))
+
 linelist
 linelist %>% glimpse()
 naniar::miss_var_summary(linelist)
@@ -61,22 +65,40 @@ naniar::miss_var_summary(contacts)
 
 # incubation period --------------------------------------------------------------------
 
-#what is happening here?
-linelist %>% 
-  mutate(mistake=date_of_onset-date_of_infection) %>% 
-  #values 0 or less
-  filter(mistake>0)
+# #what is happening here?
+# linelist %>% 
+#   mutate(mistake=date_of_onset-date_of_infection) %>% 
+#   #values 0 or less
+#   filter(mistake>0)
 
 #check for inconsistencies
+## identificar errores en la entrada de datos (período de incubación negativo)
+
+# mistakes <- which(linelist$date_of_onset <= linelist$date_of_infection)
+# mistakes
+
 linelist_mist <- linelist %>% 
   mutate(mistake=date_of_onset-date_of_infection) %>% 
   #values 0 or less
   filter(mistake<=0) %>% 
   select(case_id) %>% pull()
 
-linelist_clean <- linelist %>% 
-  filter(!(case_id %in% linelist_mist))
+# mostrar inconsistencias
+# linelist_mist
 
+# mostrar filas usando magrittr::is_in()
+linelist %>%
+  filter(magrittr::is_in(case_id,linelist_mist))
+
+
+# linelist_clean <- linelist[-mistakes, ]
+# solucion alternativa tidyverse
+
+# retirar filas usando magrittr::is_in()
+linelist_clean <- linelist %>%
+  filter(!magrittr::is_in(case_id,linelist_mist))
+
+linelist_clean %>% naniar::miss_var_summary()
 
 # case fatality ratio -----------------------------------------------------
 
@@ -260,12 +282,27 @@ epi_contacts
 # table(epi_contacts$contacts$source, useNA = "ifany")
 epi_contacts$contacts %>% count(source)
 
+plot(epi_contacts)
+
+plot(epi_contacts, 
+     edge_color = "source")
+
+plot(epi_contacts, 
+     edge_color = "source",
+     selector = FALSE)
+
+plot(epi_contacts, 
+     edge_color = "source", 
+     selector = FALSE,
+     shapes = c(m = "male", f = "female"),
+     node_shape = "gender")
+
 p <- plot(epi_contacts, 
-          node_shape = "gender", 
-          shapes = c(m = "male", f = "female"), 
-          node_color = "gender", 
           edge_color = "source", 
-          selector = FALSE)
+          selector = FALSE,
+          shapes = c(m = "male", f = "female"), 
+          node_shape = "gender", 
+          node_color = "gender")
 p
 
 
