@@ -272,7 +272,7 @@ log(2)/rev(f2[[2]]$r.conf)
 # contacts %>% 
 #   distinct(infector,case_id)
 
-epi_contacts <- make_epicontacts(linelist = linelist_clean,
+epi_contacts <- make_epicontacts(linelist = linelist,
                                  contacts = contacts,
                                  from = "infector",
                                  to = "case_id")
@@ -310,6 +310,67 @@ p
 #   length()
 linelist_clean %>% 
   filter(magrittr::is_in(case_id,contacts$case_id))
+
+#' operadores (por ejemplo: +, %>%, %in% y más) 
+#' 
+#' %in%
+#' 
+#' el operador %in% nos permite 
+#' preguntar lo siguiente:
+#' 
+#' ¿qué elementos del vector A
+#' están en el vector B?
+#' 
+#' y generar un 
+#' resultado BINARIO -> vector LÓGICO -> TRUE o FALSE
+
+# vecto A
+linelist_clean$case_id
+#vector B
+contacts$case_id
+
+# vectorA %in% vectorB
+linelist_clean$case_id %in% contacts$case_id
+
+#' podemos usar filter, 
+#' el cual permite extraer filas
+#' usando una sentencia lógica 
+linelist_clean %>% 
+  filter(case_id %in% contacts$case_id)
+
+#' si aplicamos la base de datos limpia
+#' y usamos el operador negacion usando 
+#' un simbolo de exclamación: !
+#' extraemos que una observación no está 
+#' en la base de datos de contactos
+contacts %>% 
+  filter(!(case_id %in% linelist_clean$case_id))
+
+#' si usamos la base de datos original (cruda)
+#' observamos que sí logramos identificar 
+#' que todos los casos en la base de casos (linelist)
+#' están en la base de contactos (contacts)
+contacts %>% 
+  filter((case_id %in% linelist$case_id))
+
+#' ¿podemos crear variables o usar filtros?
+#' cualquier estrategia según tus necesidades
+#' por ejemplo aquí podemos crear una columna
+#' para identificar a la observación FALSE
+#' y luego extraerla
+#' pero también filtrarla directamente
+contacts %>% 
+  # filter(!(case_id %in% linelist_clean$case_id))
+  mutate(logical = case_id %in% linelist_clean$case_id) %>% 
+  print(n=Inf)
+
+#' ¿qué hace la función match?
+#' es muy equivalente a el operador %in%
+#' solo que nos da el localizador del vector (argumento x)
+#' dentro de la base de datos (argumento table)
+#' en contraste, %in% nos da los valores de 
+#' TRUE o FALSE
+match(x = contacts$case_id, table = linelist$case_id)
 
 #' gender seems to be 
 #' more frequently infected
