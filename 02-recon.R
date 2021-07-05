@@ -364,6 +364,14 @@ contacts %>%
   mutate(logical = case_id %in% linelist_clean$case_id) %>% 
   print(n=Inf)
 
+#' algo como %in% es muy raro de usar
+#' ¿existe una alternativa más facil de usar o entender?
+#' sí
+#' usar magrittr::is_in()
+#' ver un ejemplo aquí:
+linelist_clean %>% 
+  filter(magrittr::is_in(case_id,contacts$case_id))
+
 #' ¿qué hace la función match?
 #' es muy equivalente a el operador %in%
 #' solo que nos da el localizador del vector (argumento x)
